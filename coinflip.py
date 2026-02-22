@@ -16,7 +16,14 @@ def main():
     wins: int = 0
     success_chance: float = 0
 
+    # Because we are looking for the number of tails to surpass that of heads
+    # every other flip is irrelevant and the starting parity may need changing
+    if number_of_heads % 2 == 0:
+        toss_counter += 1
+        # After one toss the heads/tails delta can either increment or decrement
+        coin_counts = {number_of_heads - 1: 1, number_of_heads + 1: 1}
 
+    
 
     end_time = time.perf_counter()
     milliseconds_elapsed = (end_time - start_time) * 1000
