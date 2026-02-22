@@ -2,7 +2,7 @@ import time
 
 def main():
     number_of_heads: int = get_initial_heads()
-    target_success_chance: float = get_success_chance()
+    target_success_chance: float = get_target_success_chance()
 
     start_time = time.perf_counter()
 
@@ -20,7 +20,7 @@ def get_initial_heads() -> int:
         else:
             return user_input
 
-def get_success_chance() -> float:
+def get_target_success_chance() -> float:
     while True:
         try:
             user_input = float(input("What success chance would you like? "))
