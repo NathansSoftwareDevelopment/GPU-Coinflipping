@@ -4,8 +4,13 @@ def main():
 
 
 def get_success_chance() -> float:
-    user_input = float(input("What success chance would you like? "))
-    return user_input
+    while True:
+        try:
+            user_input = float(input("What success chance would you like? "))
+        except ValueError:
+            print("Invalid Input. Please try again")
+        else:
+            return user_input
 
 
 if __name__ == "__main__":
