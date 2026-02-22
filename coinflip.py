@@ -1,5 +1,13 @@
+import time
+
 def main():
     target_success_chance: float = get_success_chance()
+
+    start_time = time.perf_counter()
+
+    end_time = time.perf_counter()
+    milliseconds_elapsed = (end_time - start_time) * 1000
+    print(f"Run Time of {milliseconds_elapsed}ms")
 
 
 
