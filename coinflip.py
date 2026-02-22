@@ -6,6 +6,18 @@ def main():
 
     start_time = time.perf_counter()
 
+    # Records the number of occurrences for each heads/tails delta value
+    coin_counts: dict[int, int] = {number_of_heads: 1}
+
+    # The number of coins that have been flipped
+    toss_counter: int = 0
+    # The number of possibilities where the number of tails flipped has exceeded
+    # that of heads atleast once
+    wins: int = 0
+    success_chance: float = 0
+
+
+
     end_time = time.perf_counter()
     milliseconds_elapsed = (end_time - start_time) * 1000
     print(f"Run Time of {milliseconds_elapsed}ms")
