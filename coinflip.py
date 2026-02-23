@@ -1,5 +1,6 @@
 import time
 
+
 def main():
     number_of_heads: int = get_initial_heads()
     target_success_chance: float = get_target_success_chance()
@@ -24,6 +25,14 @@ def main():
         coin_counts = {number_of_heads - 1: 1, number_of_heads + 1: 1}
 
     
+    while success_chance < target_success_chance:
+        toss_counter += 2
+        # Since we are looking for everytime we have had more tails than heads
+        # atleast one time the number of winning permutations doubles with every
+        # coin toss
+        wins = wins << 2
+
+        success_chance = wins * 100 / (1 << toss_counter)
 
     end_time = time.perf_counter()
     milliseconds_elapsed = (end_time - start_time) * 1000
