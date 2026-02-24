@@ -41,11 +41,18 @@ def main():
         minKey: int = min(keys)
         updated_coin_counts[minKey - 2] = 0
 
+        for key in updated_coin_counts:
+            updated_coin_counts[key] = coin_counts.get(key + 2, 0) + 2 * coin_counts.get(key, 0) + coin_counts.get(key - 2, 0)
+        wins += updated_coin_counts.get(-1, 0)
+        updated_coin_counts.pop(-1, None)
+
         coin_counts = updated_coin_counts.copy()
         success_chance = wins * 100 / (1 << toss_counter)
 
+
     end_time = time.perf_counter()
     milliseconds_elapsed = (end_time - start_time) * 1000
+    print(toss_counter)
     print(f"Run Time of {milliseconds_elapsed}ms")
 
 
