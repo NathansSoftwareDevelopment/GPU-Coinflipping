@@ -24,7 +24,8 @@ def main():
         # After one toss the heads/tails delta can either increment or decrement
         coin_counts = {number_of_heads - 1: 1, number_of_heads + 1: 1}
 
-    
+
+    updated_coin_counts: dict[int, int] = coin_counts.copy()
     while success_chance < target_success_chance:
         toss_counter += 2
         # Since we are looking for everytime we have had more tails than heads
@@ -32,6 +33,15 @@ def main():
         # coin toss
         wins = wins << 2
 
+        # After two tosses the two new delta values are added
+        # from flipping either two heads or two tails
+        keys: list[int] = updated_coin_counts.keys()
+        maxKey: int = max(keys)
+        updated_coin_counts[maxKey + 2] = 0
+        minKey: int = min(keys)
+        updated_coin_counts[minKey - 2] = 0
+
+        coin_counts = updated_coin_counts.copy()
         success_chance = wins * 100 / (1 << toss_counter)
 
     end_time = time.perf_counter()
