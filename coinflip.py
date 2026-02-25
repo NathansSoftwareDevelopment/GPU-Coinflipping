@@ -9,6 +9,8 @@ def main():
 
     # Records the number of occurrences for each heads/tails delta value
     coin_counts: dict[int, int] = {number_of_heads: 1}
+    delta_value_list: list[int] = [0 for _ in range(number_of_heads // 2 + 1)]
+    delta_value_list[-1] = 1
 
     # The number of coins that have been flipped
     toss_counter: int = 0
