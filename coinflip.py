@@ -25,6 +25,7 @@ def main():
         toss_counter += 1
         # After one toss the heads/tails delta can either increment or decrement
         coin_counts = {number_of_heads - 1: 1, number_of_heads + 1: 1}
+        delta_value_list[-2] = 1
 
 
     updated_coin_counts: dict[int, int] = coin_counts.copy()
