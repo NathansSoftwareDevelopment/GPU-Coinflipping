@@ -45,10 +45,21 @@ def main():
         minKey: int = min(keys)
         updated_coin_counts[minKey - 2] = 0
 
+        delta_value_list.append(0)
+
         for key in updated_coin_counts:
             updated_coin_counts[key] = coin_counts.get(key + 2, 0) + 2 * coin_counts.get(key, 0) + coin_counts.get(key - 2, 0)
-        wins += updated_coin_counts.get(-1, 0)
+        # wins += updated_coin_counts.get(-1, 0)
         updated_coin_counts.pop(-1, None)
+
+        ones_value = delta_value_list[0]
+        wins += ones_value
+        previous_value = delta_value_list[1] + 2 * ones_value
+        for index in range(1, len(delta_value_list) - 1):
+            current_value = delta_value_list[index + 1] + 2 * delta_value_list[index] + delta_value_list[index - 1]
+            delta_value_list[index - 1] = previous_value
+            previous_value = current_value
+        delta_value_list[-2] = previous_value
 
         coin_counts = updated_coin_counts.copy()
         success_chance = wins * 100 / (1 << toss_counter)
