@@ -24,6 +24,7 @@ def main():
         toss_counter += 1
         delta_value_list[number_of_odd_heads - 1] = 1
 
+    range_stop: int = len(delta_value_list)
     while success_chance < target_success_chance:
         toss_counter += 2
         # Since we are looking for everytime we have had more tails than heads
@@ -36,11 +37,12 @@ def main():
         ones_value = delta_value_list[0]
         wins += ones_value
         previous_value = delta_value_list[1] + 2 * ones_value
-        for index in range(1, len(delta_value_list) - 1):
+        for index in range(1, range_stop):
             current_value = delta_value_list[index + 1] + 2 * delta_value_list[index] + delta_value_list[index - 1]
             delta_value_list[index - 1] = previous_value
             previous_value = current_value
         delta_value_list[-2] = previous_value
+        range_stop += 1
 
         success_chance = wins * 100 / (1 << toss_counter)
 
