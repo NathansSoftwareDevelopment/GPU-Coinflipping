@@ -7,8 +7,9 @@ def main():
 
     start_time = time.perf_counter()
 
-    # Records the number of occurrences for each heads/tails delta value
-    coin_counts: dict[int, int] = {number_of_heads: 1}
+    number_of_odd_heads: int = number_of_heads // 2
+    delta_value_list: list[int] = [0 for _ in range(number_of_odd_heads + 2)]
+    delta_value_list[number_of_odd_heads] = 1
 
     # The number of coins that have been flipped
     toss_counter: int = 0
@@ -21,11 +22,9 @@ def main():
     # every other flip is irrelevant and the starting parity may need changing
     if number_of_heads % 2 == 0:
         toss_counter += 1
-        # After one toss the heads/tails delta can either increment or decrement
-        coin_counts = {number_of_heads - 1: 1, number_of_heads + 1: 1}
+        delta_value_list[number_of_odd_heads - 1] = 1
 
-
-    updated_coin_counts: dict[int, int] = coin_counts.copy()
+    range_stop: int = len(delta_value_list)
     while success_chance < target_success_chance:
         toss_counter += 2
         # Since we are looking for everytime we have had more tails than heads
@@ -33,20 +32,18 @@ def main():
         # coin toss
         wins = wins << 2
 
-        # After two tosses the two new delta values are added
-        # from flipping either two heads or two tails
-        keys: list[int] = updated_coin_counts.keys()
-        maxKey: int = max(keys)
-        updated_coin_counts[maxKey + 2] = 0
-        minKey: int = min(keys)
-        updated_coin_counts[minKey - 2] = 0
+        delta_value_list.append(0)
 
-        for key in updated_coin_counts:
-            updated_coin_counts[key] = coin_counts.get(key + 2, 0) + 2 * coin_counts.get(key, 0) + coin_counts.get(key - 2, 0)
-        wins += updated_coin_counts.get(-1, 0)
-        updated_coin_counts.pop(-1, None)
+        ones_value = delta_value_list[0]
+        wins += ones_value
+        previous_value = delta_value_list[1] + 2 * ones_value
+        for index in range(1, range_stop):
+            current_value = delta_value_list[index + 1] + 2 * delta_value_list[index] + delta_value_list[index - 1]
+            delta_value_list[index - 1] = previous_value
+            previous_value = current_value
+        delta_value_list[-2] = previous_value
+        range_stop += 1
 
-        coin_counts = updated_coin_counts.copy()
         success_chance = wins * 100 / (1 << toss_counter)
 
 
